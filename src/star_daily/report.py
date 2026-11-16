@@ -221,6 +221,8 @@ def render_readme(*, meta: ReportMeta, delta_rows: list[Candidate], latest_path:
         "",
         "## 本地运行",
         "",
+        "需要 Python 3.10 或更新版本。",
+        "",
         "```bash",
         "pip install -e .",
         "export GITHUB_TOKEN=<your_token>   # 只需要 public_repo 读权限",
