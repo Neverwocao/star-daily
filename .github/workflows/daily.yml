@@ -1,0 +1,65 @@
+name: daily-report
+
+on:
+  schedule:
+    # UTC 00:10 = 北京时间 08:10。刻意避开整点：GitHub 明确提示整点 cron 在高峰期会长时间排队延迟
+    - cron: "10 0 * * *"
+  workflow_dispatch:
+    inputs:
+      day:
+        description: "补跑指定日期（UTC，YYYY-MM-DD），留空为今天"
+        required: false
+
+permissions:
+  contents: write
+
+# 防止定时触发和手动触发同时写库
+concurrency:
+  group: daily-report
+  cancel-in-progress: false
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: pip install -e .
+
+      - name: Generate report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -n "${{ inputs.day }}" ]; then
+            python -m star_daily run --today "${{ inputs.day }}"
+          else
+            python -m star_daily run
+          fi
+
+      - name: Commit results
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data reports README.md
+          if git diff --staged --quiet; then
+            echo "没有变更，跳过提交"
+            exit 0
+          fi
+
+          git commit -m "chore: 涨星日报 $(date -u +%F)"
+          BRANCH="${GITHUB_REF_NAME:-main}"
+          git pull --rebase --autostash origin "$BRANCH"
+          git push origin "HEAD:$BRANCH"

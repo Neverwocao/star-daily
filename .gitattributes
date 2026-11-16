@@ -1,0 +1,9 @@
+# 统一用 LF：workflow 里的多行 shell 脚本若带 CRLF，在 Linux runner 上会执行失败
+* text=auto eol=lf
+
+*.py   text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.md   text eol=lf
+*.toml text eol=lf
+*.db   binary
