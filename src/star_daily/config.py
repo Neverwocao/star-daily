@@ -50,10 +50,16 @@ class Settings:
     reports_dir: Path = field(default_factory=lambda: _root() / "reports")
     readme_path: Path = field(default_factory=lambda: _root() / "README.md")
 
-    # 榜单
-    top_n: int = 10
+    # 榜单条数，两张榜共用
+    top_n: int = 30
     # 增速榜的最低星标门槛，用于挡掉基数过小导致百分比失真的仓库
     speed_min_stars: int = 500
+
+    # 简介翻译：免费接口 + 本地缓存，失败回退英文原文
+    translate: bool = True
+    translate_timeout: float = 10.0
+    # 单轮翻译请求上限，挡掉接口抽风时把整轮跑成几分钟
+    translate_max_requests: int = 120
 
     # 快照保留窗口：超过这个天数的快照会被删除，控制 db 体积
     retention_days: int = 14
@@ -70,6 +76,12 @@ class Settings:
     request_interval: float = 2.0
     max_retries: int = 3
     timeout: float = 30.0
+
+
+def translate_enabled(env: dict[str, str] | None = None) -> bool:
+    """是否翻译简介。环境变量 STAR_DAILY_TRANSLATE=0 可关闭（离线补跑时很有用）。"""
+    raw = (os.environ if env is None else env).get("STAR_DAILY_TRANSLATE", "1")
+    return raw.strip().lower() not in {"0", "false", "no", "off"}
 
 
 def build_slices(today: date) -> list[SliceSpec]:

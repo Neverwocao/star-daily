@@ -26,6 +26,8 @@ class Candidate:
     kind: DeltaKind = "unknown"
     speed: float | None = None
     is_new: bool = False
+    # 翻译后的简介；为空时渲染回退到 description 原文
+    description_zh: str | None = None
 
 
 @dataclass(frozen=True)

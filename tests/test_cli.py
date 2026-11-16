@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 
 from star_daily.cli import load_dotenv
+from star_daily.config import translate_enabled
 
 
 def test_reads_token_from_env_file(tmp_path, monkeypatch):
@@ -50,3 +51,18 @@ def test_empty_value_is_rejected(tmp_path, monkeypatch):
 
     assert load_dotenv(env_file) is False
     assert "GITHUB_TOKEN" not in os.environ
+
+
+def test_translate_switch_comes_from_env_file(tmp_path, monkeypatch):
+    # 换成副本，避免 load_dotenv 写进 os.environ 污染其他测试
+    monkeypatch.setattr(os, "environ", dict(os.environ))
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    monkeypatch.delenv("STAR_DAILY_TRANSLATE", raising=False)
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        "GITHUB_TOKEN=ghp_abc123\nSTAR_DAILY_TRANSLATE=0\n", encoding="utf-8"
+    )
+
+    assert load_dotenv(env_file) is True
+    assert os.environ["STAR_DAILY_TRANSLATE"] == "0"
+    assert translate_enabled() is False

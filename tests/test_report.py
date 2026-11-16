@@ -121,3 +121,58 @@ def test_render_readme_links_latest_report():
     )
     assert "reports/2026-11-16.md" in text
     assert "acme/rocket" in text
+
+
+def test_headings_follow_configured_top_n():
+    text = render_daily(
+        meta=_meta(top_n=5), delta_rows=[_cand()], speed_rows=[_cand(speed=0.12)]
+    )
+    assert "## 今日涨星 Top 5" in text
+    assert "## 增速榜 Top 5" in text
+    assert "Top 10" not in text
+
+
+def test_default_top_n_is_thirty():
+    assert ReportMeta(
+        day=date(2026, 11, 16),
+        window_start="2026-11-15 00:00",
+        window_end="2026-11-16 00:00",
+        generated_at="2026-11-16 00:12 UTC",
+        candidate_count=1842,
+    ).top_n == 30
+
+
+def test_translated_description_wins_over_original():
+    text = render_daily(
+        meta=_meta(),
+        delta_rows=[_cand(description="a fast thing", description_zh="一个很快的东西")],
+        speed_rows=[],
+    )
+    assert "一个很快的东西" in text
+    assert "a fast thing" not in text
+
+
+def test_render_falls_back_to_original_description():
+    text = render_daily(
+        meta=_meta(),
+        delta_rows=[_cand(description="a fast thing", description_zh=None)],
+        speed_rows=[],
+    )
+    assert "a fast thing" in text
+
+
+def test_render_flags_incomplete_translation():
+    text = render_daily(
+        meta=_meta(translate_failed=3), delta_rows=[_cand()], speed_rows=[]
+    )
+    assert "翻译不完整" in text
+    assert "3 条" in text
+
+
+def test_readme_mentions_translation_and_top_n():
+    text = render_readme(
+        meta=_meta(top_n=30), delta_rows=[_cand()], latest_path="reports/2026-11-16.md"
+    )
+    assert "Top 30" in text
+    assert "简介统一翻译成中文" in text
+    assert "translate.py" in text

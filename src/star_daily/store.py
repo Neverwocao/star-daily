@@ -7,6 +7,8 @@ from datetime import date
 from pathlib import Path
 from typing import Any, Iterable
 
+from .translate import source_hash
+
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS repo (
     id          INTEGER PRIMARY KEY,      -- GitHub repo.id，仓库改名/转移不丢历史
@@ -40,6 +42,15 @@ CREATE TABLE IF NOT EXISTS daily_rank (
     delta   INTEGER NOT NULL,
     board   TEXT NOT NULL DEFAULT 'delta',  -- delta | speed
     PRIMARY KEY (day, board, rank)
+);
+
+-- 简介译文缓存：按原文哈希去重，同一句简介跨天只翻一次
+CREATE TABLE IF NOT EXISTS translation (
+    src_hash   TEXT PRIMARY KEY,
+    src        TEXT NOT NULL,
+    zh         TEXT NOT NULL,
+    engine     TEXT,
+    created_at TEXT NOT NULL
 );
 """
 
@@ -177,6 +188,52 @@ def save_daily_rank(
         [(day, board, i + 1, repo_id, delta) for i, (repo_id, delta) in enumerate(entries)],
     )
     conn.commit()
+
+
+def load_translations(conn: sqlite3.Connection, src_hashes: Iterable[str]) -> dict[str, str]:
+    """按原文哈希批量取已缓存的译文，返回 {hash: 中文}。"""
+    hashes = list(dict.fromkeys(src_hashes))
+    if not hashes:
+        return {}
+    out: dict[str, str] = {}
+    # SQLite 的变量上限是 999，分批查避免长榜时爆掉
+    for start in range(0, len(hashes), 500):
+        chunk = hashes[start : start + 500]
+        placeholders = ",".join("?" * len(chunk))
+        rows = conn.execute(
+            f"SELECT src_hash, zh FROM translation WHERE src_hash IN ({placeholders})",
+            chunk,
+        ).fetchall()
+        for row in rows:
+            out[row["src_hash"]] = row["zh"]
+    return out
+
+
+def save_translations(
+    conn: sqlite3.Connection,
+    entries: Iterable[tuple[str, str, str]],
+    *,
+    captured_at: str,
+) -> int:
+    """写入新译文。同原文重复出现时覆盖旧译文，方便接口换引擎后修正。"""
+    rows = []
+    for src, zh, engine in entries:
+        rows.append((source_hash(src), src, zh, engine, captured_at))
+    if not rows:
+        return 0
+    conn.executemany(
+        """
+        INSERT INTO translation (src_hash, src, zh, engine, created_at)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(src_hash) DO UPDATE SET
+            zh         = excluded.zh,
+            engine     = excluded.engine,
+            created_at = excluded.created_at
+        """,
+        rows,
+    )
+    conn.commit()
+    return len(rows)
 
 
 def load_previous_rank(conn: sqlite3.Connection, day: str, board: str) -> set[int]:

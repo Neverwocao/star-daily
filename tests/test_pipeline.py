@@ -34,6 +34,8 @@ def _settings(tmp_path) -> Settings:
         db_path=tmp_path / "state.db",
         reports_dir=tmp_path / "reports",
         readme_path=tmp_path / "README.md",
+        # 单元测试不联网：翻译层单独在 test_translate.py 用假 transport 覆盖
+        translate=False,
     )
 
 

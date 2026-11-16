@@ -10,10 +10,11 @@ from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-from . import store
+from . import store, translate
 from .api import SearchClient, SliceResult
-from .config import Settings, build_slices, project_root
+from .config import Settings, build_slices, project_root, translate_enabled
 from .ranking import (
+    Candidate,
     build_candidates,
     dedupe_by_name,
     mark_new_comers,
@@ -36,30 +37,24 @@ def _utc_now() -> datetime:
 
 
 def load_dotenv(path: Path | None = None) -> bool:
-    """从项目根的 .env 读取 GITHUB_TOKEN（环境变量已设置则不覆盖）。
+    """从项目根的 .env 读取配置（环境变量已设置则不覆盖）。
 
     只为免掉"每次运行都要先 export"这一步，够用即可，不引入额外依赖。
-    返回是否真的读到了 token。
+    支持多行 `KEY=VALUE`，目前用到 `GITHUB_TOKEN` 与 `STAR_DAILY_TRANSLATE`；
+    返回 GITHUB_TOKEN 是否可用。
     """
-    if os.environ.get("GITHUB_TOKEN"):
-        return True
-
     env_file = path or project_root() / ".env"
-    if not env_file.exists():
-        return False
-
-    for line in env_file.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, _, value = line.partition("=")
-        if key.strip() != "GITHUB_TOKEN":
-            continue
-        value = value.strip().strip('"').strip("'")
-        if value:
-            os.environ["GITHUB_TOKEN"] = value
-            return True
-    return False
+    if env_file.exists():
+        for line in env_file.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            if key and value and key not in os.environ:
+                os.environ[key] = value
+    return bool(os.environ.get("GITHUB_TOKEN"))
 
 
 def _resolve_day(raw: str | None) -> date:
@@ -130,6 +125,57 @@ def collect(settings: Settings, day: date) -> CollectResult:
     return CollectResult(slices=results, repo_count=len(collected))
 
 
+def _apply_translations(
+    settings: Settings, conn, candidates: list[Candidate]
+) -> tuple[int, int]:
+    """把榜上出现的简介译成中文，返回 (已译条数, 回退英文条数)。
+
+    只翻榜单行而不是整个候选池：一次运行几十条，接口压力小、报告也够用。
+    译文写进快照库缓存，下一期同一仓库不用再翻。
+    """
+    if not settings.translate:
+        return 0, 0
+
+    texts = [
+        cand.description
+        for cand in candidates
+        if cand.description and translate.needs_translation(cand.description)
+    ]
+    if not texts:
+        return 0, 0
+
+    cache = store.load_translations(conn, [translate.source_hash(t) for t in texts])
+    with translate.Translator(
+        timeout=settings.translate_timeout,
+        max_requests=settings.translate_max_requests,
+    ) as translator:
+        mapping, fresh, stats = translate.translate_texts(
+            texts, translator=translator, cache=cache
+        )
+        requests_made = translator.requests_made
+
+    if fresh:
+        store.save_translations(
+            conn, fresh, captured_at=_utc_now().isoformat(timespec="seconds")
+        )
+
+    for cand in candidates:
+        if cand.description:
+            cand.description_zh = mapping.get(cand.description.strip())
+
+    if stats.failed:
+        log.warning(
+            "简介翻译不完整：%d 条回退英文原文（缓存命中 %d 条）",
+            stats.failed, stats.from_cache,
+        )
+    else:
+        log.info(
+            "简介翻译完成：%d 条中文（缓存命中 %d 条，新发请求 %d 次）",
+            stats.translated, stats.from_cache, requests_made,
+        )
+    return stats.translated, stats.failed
+
+
 def build_report(settings: Settings, day: date, *, collect_result: CollectResult | None = None) -> Path:
     day_str = day.isoformat()
     conn = store.connect(settings.db_path)
@@ -156,6 +202,10 @@ def build_report(settings: Settings, day: date, *, collect_result: CollectResult
         mark_new_comers(delta_rows, store.load_previous_rank(conn, day_str, "delta"))
         mark_new_comers(speed_rows, store.load_previous_rank(conn, day_str, "speed"))
 
+        translated, translate_failed = _apply_translations(
+            settings, conn, delta_rows + speed_rows
+        )
+
         slices = (
             [(s.label, s.complete, s.note) for s in collect_result.slices]
             if collect_result
@@ -172,6 +222,10 @@ def build_report(settings: Settings, day: date, *, collect_result: CollectResult
             db_size=store.db_size_bytes(settings.db_path),
             speed_min_stars=settings.speed_min_stars,
             merged_duplicates=merged,
+            top_n=settings.top_n,
+            translate_enabled=settings.translate,
+            translated=translated,
+            translate_failed=translate_failed,
         )
 
         body = render_daily(meta=meta, delta_rows=delta_rows, speed_rows=speed_rows)
@@ -209,6 +263,10 @@ def main(argv: list[str] | None = None) -> int:
         help="collect=只抓取入库，report=只重出报告，run=两步都做（默认）",
     )
     parser.add_argument("--today", help="以指定日期运行（YYYY-MM-DD），用于补跑")
+    parser.add_argument(
+        "--no-translate", action="store_true",
+        help="跳过简介翻译，简介保留英文原文（离线补跑或接口不可用时用）",
+    )
     parser.add_argument("--verbose", "-v", action="store_true")
     args = parser.parse_args(argv)
 
@@ -221,7 +279,13 @@ def main(argv: list[str] | None = None) -> int:
     day = _resolve_day(args.today)
     had_token_in_env = bool(os.environ.get("GITHUB_TOKEN"))
     load_dotenv()
-    settings = Settings(token=os.environ.get("GITHUB_TOKEN", ""))
+    settings = Settings(
+        token=os.environ.get("GITHUB_TOKEN", ""),
+        translate=translate_enabled() and not args.no_translate,
+    )
+
+    if not settings.translate:
+        log.info("简介翻译已关闭（STAR_DAILY_TRANSLATE=0 或 --no-translate），简介保留原文")
 
     if not settings.token:
         log.warning("未设置 GITHUB_TOKEN，将使用未认证限额（Search API 仅 10 次/分钟，本轮会明显变慢）")

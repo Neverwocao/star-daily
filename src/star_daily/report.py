@@ -22,6 +22,11 @@ class ReportMeta:
     db_size: int = 0
     speed_min_stars: int = 500
     merged_duplicates: int = 0
+    # 榜单标题按这个数字动态生成，避免候选不足时标题说谎
+    top_n: int = 30
+    translate_enabled: bool = True
+    translated: int = 0        # 简介成功译成中文的条数（含缓存命中）
+    translate_failed: int = 0  # 简介翻译失败、回退英文原文的条数
 
 
 def fmt_stars(n: int) -> str:
@@ -72,6 +77,11 @@ def _repo_cell(c: Candidate) -> str:
     return f"{mark}[{c.full_name}]({c.html_url})"
 
 
+def _description(c: Candidate) -> str:
+    """优先用中文译文；没译出来就回退英文原文，绝不空着。"""
+    return c.description_zh or c.description or ""
+
+
 def _delta_table(rows: list[Candidate]) -> list[str]:
     lines = [
         "| # | 仓库 | 今日 | 总星 | 语言 | 简介 |",
@@ -80,7 +90,7 @@ def _delta_table(rows: list[Candidate]) -> list[str]:
     for i, c in enumerate(rows, 1):
         lines.append(
             f"| {i} | {_repo_cell(c)} | **{fmt_delta(c)}** | {fmt_stars(c.stars)} "
-            f"| {_cell(c.language, 18) or '—'} | {_cell(c.description)} |"
+            f"| {_cell(c.language, 18) or '—'} | {_cell(_description(c))} |"
         )
     return lines
 
@@ -93,7 +103,7 @@ def _speed_table(rows: list[Candidate]) -> list[str]:
     for i, c in enumerate(rows, 1):
         lines.append(
             f"| {i} | {_repo_cell(c)} | **{fmt_speed(c)}** | {fmt_delta(c)} "
-            f"| {fmt_stars(c.stars)} | {_cell(c.language, 18) or '—'} | {_cell(c.description)} |"
+            f"| {fmt_stars(c.stars)} | {_cell(c.language, 18) or '—'} | {_cell(_description(c))} |"
         )
     return lines
 
@@ -132,6 +142,11 @@ def _headers(meta: ReportMeta) -> list[str]:
             "> **首次运行，库中无历史快照**：部分增量为仓库生命周期平均日增（`≈` 标记），"
             "非真实当日增长。次日开始自动切换为真实差值。"
         )
+    if meta.translate_enabled and meta.translate_failed:
+        lines.append(">")
+        lines.append(
+            f"> **翻译不完整**：{meta.translate_failed} 条简介未能翻译，保留英文原文。"
+        )
     if any(not complete for _, complete, _ in meta.slices):
         lines.append("")
         lines.append("**数据不完整**：")
@@ -148,10 +163,10 @@ def render_daily(
     speed_rows: list[Candidate],
 ) -> str:
     lines = _headers(meta)
-    lines += ["", "## 今日涨星 Top 10", ""]
+    lines += ["", f"## 今日涨星 Top {meta.top_n}", ""]
     lines += _delta_table(delta_rows) if delta_rows else ["_今日没有可用的增量数据。_"]
 
-    lines += ["", "## 增速榜 Top 10", ""]
+    lines += ["", f"## 增速榜 Top {meta.top_n}", ""]
     if speed_rows:
         lines += _speed_table(speed_rows)
     else:
@@ -162,8 +177,11 @@ def render_daily(
         "- 数据源为 GitHub 官方 REST API（`/search/repositories`），不抓取任何网页。",
         "- 「今日」= 与最近一次历史快照的 star 差值；正常为 24 小时，用 `~` 标记的是断档后按日均摊平的估算值。",
         "- `*` 表示本期新上榜（与上一期榜单对比）。",
+        f"- 两张榜各取前 {meta.top_n} 名（`Settings.top_n`）。",
         f"- 增速榜仅统计基数 ≥ {meta.speed_min_stars} 星的仓库，避免小分母放大百分比。",
         "- 同名仓库（去掉结尾数字与分隔符后相同）只保留最强的一个，用于压掉同一项目批量建号的霸榜。",
+        "- 简介统一译为中文：首选 Google translate 免费端点，失败回退 MyMemory；译文按原文哈希缓存进快照库，"
+        "已是中文的跳过，接口不可用时保留英文原文。",
         "- 分片查询用于绕开 Search API 单查询 1000 条上限；分片未全覆盖时会在顶部提示。",
     ]
     lines += ["", "---", "", f"_由 star-daily 自动生成 · 快照库 {meta.db_size / 1024:.0f} KB_", ""]
@@ -176,7 +194,8 @@ def render_readme(*, meta: ReportMeta, delta_rows: list[Candidate], latest_path:
         "# GitHub 涨星日报",
         "",
         "每天定时调用 GitHub 官方 Search API 抓取候选仓库，写入 SQLite 快照库，",
-        "与上一次快照对比算出日增 star，输出 Top 10 榜单并自动提交回本仓库。",
+        f"与上一次快照对比算出日增 star，输出 Top {meta.top_n} 榜单并自动提交回本仓库。",
+        "榜单里的仓库简介统一翻译成中文，不用再对着英文猜。",
         "",
         "## 最新一期 · " + day,
         "",
@@ -193,7 +212,9 @@ def render_readme(*, meta: ReportMeta, delta_rows: list[Candidate], latest_path:
         "```",
         "Search API 5 个分片召回 → 去重 → UPSERT 当日快照(SQLite)",
         "                                    ↓",
-        "              读取最近可用基线 → 计算日增 → 排序 Top 10",
+        f"              读取最近可用基线 → 计算日增 → 排序 Top {meta.top_n}",
+        "                                    ↓",
+        "               榜单简介翻译成中文（缓存命中则不发请求）",
         "                                    ↓",
         "                     渲染 Markdown → commit 回仓库",
         "```",
@@ -203,13 +224,18 @@ def render_readme(*, meta: ReportMeta, delta_rows: list[Candidate], latest_path:
         "- **1000 条上限**：任一查询命中超过 1000 条时自动二分 star 区间，直到每片都能完整召回。",
         "- **断档处理**：基线取「最近一次早于今天的快照」而非硬编码 T-1；间隔 2~4 天按日均摊平并标 `~`，超过 4 天弃权。",
         "- **同名合并**：按去掉结尾数字与分隔符后的名称合并批量建号的雷同仓库，只保留最强的一个。",
+        "- **简介翻译**：榜单行才翻译，按原文哈希缓存进快照库，同一句简介跨天只翻一次；"
+        "Google 免费端点不可用时退到 MyMemory，都失败就保留英文原文并在报告顶部标注；"
+        "连续失败会自动停手，不会拖慢出报。",
+        "- **榜单条数**：默认两张榜各 30 条，由 `Settings.top_n` 控制。",
         "",
         "## 部署到自己的仓库",
         "",
         "1. Fork 或新建仓库，推入本目录全部文件。",
         "2. 确认 `Settings → Actions → General → Workflow permissions` 勾选 **Read and write permissions**，"
         "否则 bot 无法提交结果。",
-        "3. 无需配置任何 Secret —— 内置 `GITHUB_TOKEN` 已足够（公开数据读取 + 对本仓库写入）。",
+        "3. 无需配置任何 Secret —— 内置 `GITHUB_TOKEN` 已足够（公开数据读取 + 对本仓库写入）。"
+        "简介翻译走免费接口，同样不需要 key；若运行环境访问不了翻译接口，简介会保留英文原文并在报告顶部标注，不影响出榜。",
         "4. 默认每天 UTC 00:10（北京时间 08:10）运行，也可在 Actions 页面手动触发并指定补跑日期。",
         "",
         "> 若默认分支开启了分支保护，需放行 `github-actions[bot]` 直接推送，否则提交步骤会失败。",
@@ -228,10 +254,11 @@ def render_readme(*, meta: ReportMeta, delta_rows: list[Candidate], latest_path:
         "export GITHUB_TOKEN=<your_token>   # 只需要 public_repo 读权限",
         "python -m star_daily run           # 抓取 + 出报告",
         "python -m star_daily report        # 只用已有数据重出报告",
+        "STAR_DAILY_TRANSLATE=0 python -m star_daily report   # 离线补跑：跳过简介翻译",
         "```",
         "",
         "```bash",
-        "pytest                             # 49 个测试：日增计算、断档归一、同名合并、渲染转义、幂等写入、.env 读取",
+        "pytest                             # 68 个测试：日增计算、断档归一、同名合并、渲染转义、幂等写入、.env 读取、简介翻译",
         "```",
         "",
         "## 目录",
@@ -243,6 +270,7 @@ def render_readme(*, meta: ReportMeta, delta_rows: list[Candidate], latest_path:
         "| `src/star_daily/ranking.py` | 日增计算与榜单排序（纯函数） |",
         "| `src/star_daily/report.py` | Markdown 渲染（纯函数） |",
         "| `src/star_daily/cli.py` | `collect` / `report` / `run` 入口 |",
+        "| `src/star_daily/translate.py` | 简介中文翻译：免费接口 + 译文缓存 + 失败回退 |",
         "| `data/state.db` | 快照库，随每次运行提交，保留最近 14 天 |",
         "| `reports/` | 历史日报，永久留存 |",
         "| `examples/sample-report.md` | 报告格式预览（样例数据） |",
