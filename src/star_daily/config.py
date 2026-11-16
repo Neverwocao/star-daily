@@ -15,6 +15,11 @@ def _root() -> Path:
     return Path(override).resolve() if override else _DEFAULT_ROOT
 
 
+def project_root() -> Path:
+    """项目根目录。可用 STAR_DAILY_ROOT 覆盖，便于测试和补跑。"""
+    return _root()
+
+
 @dataclass(frozen=True)
 class SliceSpec:
     """一个 Search API 查询分片。

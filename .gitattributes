@@ -7,3 +7,7 @@
 *.md   text eol=lf
 *.toml text eol=lf
 *.db   binary
+
+# 批处理必须 CRLF，cmd 对纯 LF 的 goto/label 解析不可靠
+*.bat  text eol=crlf
+*.cmd  text eol=crlf

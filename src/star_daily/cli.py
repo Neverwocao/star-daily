@@ -12,7 +12,7 @@ from pathlib import Path
 
 from . import store
 from .api import SearchClient, SliceResult
-from .config import Settings, build_slices
+from .config import Settings, build_slices, project_root
 from .ranking import (
     build_candidates,
     dedupe_by_name,
@@ -33,6 +33,33 @@ class CollectResult:
 
 def _utc_now() -> datetime:
     return datetime.now(timezone.utc)
+
+
+def load_dotenv(path: Path | None = None) -> bool:
+    """从项目根的 .env 读取 GITHUB_TOKEN（环境变量已设置则不覆盖）。
+
+    只为免掉"每次运行都要先 export"这一步，够用即可，不引入额外依赖。
+    返回是否真的读到了 token。
+    """
+    if os.environ.get("GITHUB_TOKEN"):
+        return True
+
+    env_file = path or project_root() / ".env"
+    if not env_file.exists():
+        return False
+
+    for line in env_file.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        if key.strip() != "GITHUB_TOKEN":
+            continue
+        value = value.strip().strip('"').strip("'")
+        if value:
+            os.environ["GITHUB_TOKEN"] = value
+            return True
+    return False
 
 
 def _resolve_day(raw: str | None) -> date:
@@ -190,10 +217,15 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     day = _resolve_day(args.today)
+    had_token_in_env = bool(os.environ.get("GITHUB_TOKEN"))
+    load_dotenv()
     settings = Settings(token=os.environ.get("GITHUB_TOKEN", ""))
 
     if not settings.token:
-        log.warning("未设置 GITHUB_TOKEN，将使用未认证限额（Search API 仅 10 次/分钟）")
+        log.warning("未设置 GITHUB_TOKEN，将使用未认证限额（Search API 仅 10 次/分钟，本轮会明显变慢）")
+        log.warning("提示：把 .env.example 复制为 .env 并填入 token，之后就不用再配")
+    elif not had_token_in_env:
+        log.info("已从 .env 读取 GITHUB_TOKEN")
 
     log.info("运行日期 %s（UTC 自然日）", day.isoformat())
 

@@ -33,6 +33,21 @@ Search API 5 个分片召回 → 去重 → UPSERT 当日快照(SQLite)
 3. 无需配置任何 Secret —— 使用 Actions 内置的 `GITHUB_TOKEN`，公开数据读取和对本仓库的写入权限都已足够。
 4. 默认每天 UTC 00:10（北京时间 08:10）运行，也可在 Actions 页面手动触发并指定补跑日期。
 
+> 若默认分支开启了分支保护，需放行 `github-actions[bot]` 直接推送，否则提交步骤会失败。
+
+## 一键运行（Windows）
+
+双击 `run-daily.bat` 即可。它会自检 Python 版本、首次运行时自动装依赖、生成报告并打开 `reports/` 目录。
+
+想免去每次配 token，把 `.env.example` 复制为 `.env` 并填入 token —— `.env` 已被 gitignore 排除，不会误提交。
+
+```bat
+copy .env.example .env
+:: 编辑 .env，把 GITHUB_TOKEN= 后面补上你的 token
+```
+
+需要放到桌面的话，右键 `run-daily.bat` → 发送到 → 桌面快捷方式。
+
 ## 本地运行
 
 ```bash
@@ -46,7 +61,7 @@ python -m star_daily collect       # 只抓取入库
 未设置 `GITHUB_TOKEN` 时使用未认证限额（Search API 仅 10 次/分钟），能跑但会明显变慢。
 
 ```bash
-pytest                             # 44 个测试，覆盖日增计算、断档归一、同名合并、渲染转义、幂等写入
+pytest                             # 49 个测试，覆盖日增计算、断档归一、同名合并、渲染转义、幂等写入、.env 读取
 ```
 
 ## 目录

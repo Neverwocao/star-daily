@@ -9,3 +9,6 @@ dist/
 
 # 快照库需要提交进仓库，是有意保留的
 !data/state.db
+
+# 本地 token，绝不提交
+.env
