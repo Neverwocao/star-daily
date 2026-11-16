@@ -23,6 +23,13 @@ if errorlevel 1 (
 )
 
 rem ---- 3. 生成日报 ----
+if not exist ".env" (
+  echo   Note: .env not found, running unauthenticated.
+  echo         This round takes about 4-5 minutes.
+  echo         To speed up: copy .env.example to .env and add a token.
+  echo.
+)
+
 echo ============================================
 echo   Generating daily report...
 echo ============================================
