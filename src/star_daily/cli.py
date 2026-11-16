@@ -178,11 +178,13 @@ def build_report(settings: Settings, day: date, *, collect_result: CollectResult
 
         settings.reports_dir.mkdir(parents=True, exist_ok=True)
         report_path = settings.reports_dir / f"{day_str}.md"
-        report_path.write_text(body, encoding="utf-8")
+        # newline="\n"：不指定的话 Windows 会写成 CRLF，每天提交都会在 git 里
+        # 触发换行符转换警告，而且和 Actions（Linux）产出的文件不一致
+        report_path.write_text(body, encoding="utf-8", newline="\n")
 
         rel_path = f"reports/{day_str}.md"
         readme = render_readme(meta=meta, delta_rows=delta_rows, latest_path=rel_path)
-        settings.readme_path.write_text(readme, encoding="utf-8")
+        settings.readme_path.write_text(readme, encoding="utf-8", newline="\n")
 
         store.save_daily_rank(
             conn, day_str, "delta", [(c.repo_id, c.delta or 0) for c in delta_rows]
