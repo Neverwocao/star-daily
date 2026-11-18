@@ -4,42 +4,42 @@
 与上一次快照对比算出日增 star，输出 Top 30 榜单并自动提交回本仓库。
 榜单里的仓库简介统一翻译成中文，不用再对着英文猜。
 
-## 最新一期 · 2026-11-17
+## 最新一期 · 2026-11-18
 
 | # | 仓库 | 今日 | 总星 | 语言 | 简介 |
 |---:|------|-----:|-----:|------|------|
-| 1 | *[morluto/rea](https://github.com/morluto/rea) | **+2,556** | 464.8k | TypeScript | 使用代理对任何内容进行逆向工程，从应用程序行为到本机二进制文件。 |
-| 2 | *[dream-num/univer](https://github.com/dream-num/univer) | **+2,039** | 28.5k | TypeScript | 使用 Univer Office SDK 构建您自己的 AI 办公室。将编辑、计算、协作和文件处理引入您的产品中，供人员和 A… |
-| 3 | *[Ebony-Vinyl/dsh-our-free-model](https://github.com/Ebony-Vinyl/dsh-our-free-model) | **+1,755** | 77.8k | JavaScript | 在 dsh 里装上这个插件即可，无需登录、注册或填 API Key，就能使用包括 DeepSeek V4.1 Flash、Ki… |
-| 4 | *[pingdotgg/t3code](https://github.com/pingdotgg/t3code) | **+1,479** | 63.2k | TypeScript | 从任何计算机或手机控制 Claude Code、Codex 等的最佳方式 |
-| 5 | *[ccch1mneyyy/dsh-Go](https://github.com/ccch1mneyyy/dsh-Go) | **+1,306** | 25.2k | Dart | dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。 |
-| 6 | *[storytold/craft-anything](https://github.com/storytold/craft-anything) | **+1,145** | 35.1k | Rust | 制作任何东西：了解任何软件的工作原理，并制作自己的软件。 |
-| 7 | *[stablyai/orca](https://github.com/stablyai/orca) | **+1,134** | 127.1k | TypeScript | Orca 允许您通过自己的订阅运行一组编码代理（例如 Claude Code、Codex）。可在桌面、移动和远程运行时使用。 |
-| 8 | [deepseek-ai/chat-demo](https://github.com/deepseek-ai/chat-demo) | **+981** | 4.3k | TypeScript | 聊天演示 |
-| 9 | *[alibaba/open-code-review](https://github.com/alibaba/open-code-review) | **+940** | 53.2k | Go | 安全、快速、高效，经过阿里巴巴规模的实战考验。混合架构代码审查工具：确定性管道+LLM代理，精确的行级注释，内置多语言规则集（… |
-| 10 | *[affaan-m/ECC](https://github.com/affaan-m/ECC) | **+918** | 304.8k | JavaScript | 代理利用性能优化系统。 Claude Code、Codex、Opencode、Cursor 等的技能、直觉、记忆、安全性和研究… |
-| 11 | *[milind-soni/OpenMausBot](https://github.com/milind-soni/OpenMausBot) | **+841** | 24.4k | TypeScript | 开源 Grok Bot 替代品，带有机器人可以使用的虚拟机 |
-| 12 | [hitkeeen/blender-ai-mcp-addon](https://github.com/hitkeeen/blender-ai-mcp-addon) | **+825** | 2.3k | — | 适用于 Blender 的 AI 助手和 MCP 服务器：可视化聊天、场景工具、多代理工作流。可与 ChatGPT/GPT、C… |
-| 13 | *[meta/astryx](https://github.com/meta/astryx) | **+795** | 29.8k | TypeScript | 完全可定制且可供代理使用的开源设计系统 |
-| 14 | *[sherlock-project/sherlock](https://github.com/sherlock-project/sherlock) | **+770** | 113.4k | Python | 通过社交网络上的用户名查找社交媒体帐户 |
-| 15 | *[pbakaus/impeccable](https://github.com/pbakaus/impeccable) | **+755** | 111.6k | Rust | 编码代理的设计词汇。更加优雅和大胆地进行引导，通过批评和审计进行审查，在人工智能发布之前抓住它。 |
-| 16 | *[DuarteSantos8/openGym](https://github.com/DuarteSantos8/openGym) | **+746** | 22.3k | JavaScript | 开源健身房和体重追踪器，现已在 App Store（iPhone + Apple Watch）中以 Android APK 形… |
-| 17 | *[debpalash/VoiceStudio](https://github.com/debpalash/VoiceStudio) | **+723** | 112.2k | Python | VoiceStudio 是 ElevenLabs 的开源、完全本地化替代方案 — 提供 646 种语言的语音克隆、语音设计、视… |
-| 18 | *[ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) | **+720** | 57.8k | TypeScript | 用于编码代理的 Chrome DevTools |
-| 19 | [Noniv/abyssal-garden](https://github.com/Noniv/abyssal-garden) | **+714** | 1.9k | JavaScript | 您可以在浏览器中畅游的梦幻水下世界：摇曳的海藻林、阳光、沉船和蝠鲼。所有内容均由 WebGPU 代码生成（不含图像、模型或声音… |
-| 20 | *[tashfeenahmed/freellmapi](https://github.com/tashfeenahmed/freellmapi) | **+702** | 53.7k | TypeScript | 每月 101 亿个代币。 87 个免费的法学硕士提供商。 1,313 个免费模型端点。所有这些都位于一个 /v1 端点以及任何… |
-| 21 | *[yetone/magpie](https://github.com/yetone/magpie) | **+697** | 37.8k | Go | 每个代理的模型。一处。来自菜单栏的 DeepSeek 上的 Codex、Kimi 上的 Claude Code。 |
-| 22 | *[Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) | **+690** | 149.2k | Python | 将任何代码库及其文档、SQL 架构、配置和 PDF 转换为可查询的知识图。适用于 Claude Code、Cursor、Cod… |
-| 23 | *[kingcharleslzy-ai/dsh-purge](https://github.com/kingcharleslzy-ai/dsh-purge) | **+620** | 9.4k | JavaScript | dsh-purge Community · DeepSeek Harness 社区维护版：宿主兼容、状态诊断、提示词管理、更新… |
-| 24 | *[heygen-com/hyperframes](https://github.com/heygen-com/hyperframes) | **+619** | 85.4k | TypeScript | 编写 HTML。渲染视频。专为代理商打造。 |
-| 25 | *[JuneYaooo/rea-video](https://github.com/JuneYaooo/rea-video) | **+615** | 9.9k | Python | Reverse-engineer any video, shot by shot: filmed, AI-generated… |
-| 26 | *[mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | **+597** | 68.4k | Python | AI 代理技能可研究 Reddit、X、YouTube、HN、Polymarket 和网络上的任何主题，然后综合得出有根据的摘要 |
-| 27 | *[KnifeLemon/Filee](https://github.com/KnifeLemon/Filee) | **+582** | 28.2k | C# | 免费的开源文件转换器。通过拖放功能离线转换 263 格式 — 图像、PDF、Word、Excel、PowerPoint、HWP… |
-| 28 | *[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | **+566** | 150.6k | Python | 一种人工智能技能，为跨多个平台构建专业的 UI/UX 提供设计智能。 |
-| 29 | *[Minireel/HGhub](https://github.com/Minireel/HGhub) | **+546** | 9.6k | Rust | 插件媒体播放器 |
-| 30 | *[getarcaneapp/arcane](https://github.com/getarcaneapp/arcane) | **+531** | 8.9k | Go | 现代 Docker 管理，专为所有人设计 |
+| 1 | *[krisgfx9/Wireless-Device-Battery-Monitor](https://github.com/krisgfx9/Wireless-Device-Battery-Monitor) | **+2,623** | 3.2k | C++ | 在 Windows 10/11 任务栏上显示无线鼠标、耳机、键盘和控制器的电池电量。轻量级托盘应用程序，无需供应商软件。支持… |
+| 2 | *[elementalsouls/Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter) | **+2,113** | 9.9k | Python | 用于错误搜寻和外部红队工作的 Claude Code 技能包 - 82 项技能、15 个斜线命令、涵盖 24 个核心漏洞类别的… |
+| 3 | [morluto/rea](https://github.com/morluto/rea) | **+2,097** | 466.9k | TypeScript | 使用代理对任何内容进行逆向工程，从应用程序行为到本机二进制文件。 |
+| 4 | *[BaaRai/ARTEX](https://github.com/BaaRai/ARTEX) | **~+1,740** | 7.4k | Go | ARTEX - AI自主渗透测试系统（英文翻译；上游：Autumn-27/ARTEX、AGPL-3.0） |
+| 5 | [pingdotgg/t3code](https://github.com/pingdotgg/t3code) | **+1,273** | 64.5k | TypeScript | 从任何计算机或手机控制 Claude Code、Codex 等的最佳方式 |
+| 6 | [ccch1mneyyy/dsh-Go](https://github.com/ccch1mneyyy/dsh-Go) | **+1,196** | 26.4k | Dart | dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。 |
+| 7 | [Ebony-Vinyl/dsh-our-free-model](https://github.com/Ebony-Vinyl/dsh-our-free-model) | **+1,182** | 79.0k | JavaScript | 在 dsh 里装上这个插件即可，无需登录、注册或填 API Key，就能使用包括 DeepSeek V4.1 Flash、Ki… |
+| 8 | [stablyai/orca](https://github.com/stablyai/orca) | **+1,110** | 128.2k | TypeScript | Orca 允许您通过自己的订阅运行一组编码代理（例如 Claude Code、Codex）。可在桌面、移动和远程运行时使用。 |
+| 9 | *[RoutineMiku/apkstart](https://github.com/RoutineMiku/apkstart) | **~+1,102** | 7.6k | JavaScript | Windows 上的安卓应用运行器：双击 APK 即装，应用以独立窗口与桌面图标运行，自持 QEMU 运行时 |
+| 10 | [affaan-m/ECC](https://github.com/affaan-m/ECC) | **+999** | 305.8k | JavaScript | 代理利用性能优化系统。 Claude Code、Codex、Opencode、Cursor 等的技能、直觉、记忆、安全性和研究… |
+| 11 | [storytold/craft-anything](https://github.com/storytold/craft-anything) | **+998** | 36.1k | Rust | 制作任何东西：了解任何软件的工作原理，并制作自己的软件。 |
+| 12 | *[Immortal-Protocols/lastbook](https://github.com/Immortal-Protocols/lastbook) | **+998** | 1.9k | Python | 用于生存和重建的线下知识 AI、地图和视频 |
+| 13 | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | **+989** | 69.4k | Python | AI 代理技能可研究 Reddit、X、YouTube、HN、Polymarket 和网络上的任何主题，然后综合得出有根据的摘要 |
+| 14 | [dream-num/univer](https://github.com/dream-num/univer) | **+983** | 29.5k | TypeScript | 使用 Univer Office SDK 构建您自己的 AI 办公室。将编辑、计算、协作和文件处理引入您的产品中，供人员和 A… |
+| 15 | *[NYLLON-SOFTWARE/SignuDoc](https://github.com/NYLLON-SOFTWARE/SignuDoc) | **+894** | 1.9k | TypeScript | 开源文档签名平台。不隶属于 DocuSign。 |
+| 16 | [debpalash/VoiceStudio](https://github.com/debpalash/VoiceStudio) | **+889** | 113.0k | Python | VoiceStudio 是 ElevenLabs 的开源、完全本地化替代方案 — 提供 646 种语言的语音克隆、语音设计、视… |
+| 17 | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | **+830** | 112.4k | Rust | 编码代理的设计词汇。更加优雅和大胆地进行引导，通过批评和审计进行审查，在人工智能发布之前抓住它。 |
+| 18 | [alibaba/open-code-review](https://github.com/alibaba/open-code-review) | **+741** | 54.0k | Go | 安全、快速、高效，经过阿里巴巴规模的实战考验。混合架构代码审查工具：确定性管道+LLM代理，精确的行级注释，内置多语言规则集（… |
+| 19 | [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes) | **+716** | 86.1k | TypeScript | 编写 HTML。渲染视频。专为代理商打造。 |
+| 20 | *[tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) | **~+626** | 6.9k | Python | 克劳德代码为股票投资者和交易者提供的技能——市场分析、技术图表、经济日历、筛选器和交易策略开发。 |
+| 21 | [milind-soni/OpenMausBot](https://github.com/milind-soni/OpenMausBot) | **+620** | 25.0k | TypeScript | 开源 Grok Bot 替代品，带有机器人可以使用的虚拟机 |
+| 22 | [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) | **+599** | 149.8k | Python | 将任何代码库及其文档、SQL 架构、配置和 PDF 转换为可查询的知识图。适用于 Claude Code、Cursor、Cod… |
+| 23 | *[kajisho5/ffmpeg-skill](https://github.com/kajisho5/ffmpeg-skill) | **+598** | 7.8k | Python | 用于编码代理的本地视频编辑器：42 个 FFmpeg 工具，带有机器可读合约和 MCP 服务器，用于 Claude Code、… |
+| 24 | *[sybil-solutions/inference-optimisation-skill](https://github.com/sybil-solutions/inference-optimisation-skill) | **+581** | 978 | Python | 在任何硬件和量化上爬山本地 LLM 服务速度（解码、推测解码、预填充、KV、启动、TTFT）的代理技能 |
+| 25 | *[lemomo-ai/lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) | **+578** | 18.0k | JavaScript | A toolbox of film styles made in code for Claude Code: 99 ready… |
+| 26 | [getarcaneapp/arcane](https://github.com/getarcaneapp/arcane) | **+551** | 9.5k | Go | 现代 Docker 管理，专为所有人设计 |
+| 27 | [tashfeenahmed/freellmapi](https://github.com/tashfeenahmed/freellmapi) | **+550** | 54.2k | TypeScript | 每月 101 亿个代币。 87 个免费的法学硕士提供商。 1,313 个免费模型端点。所有这些都位于一个 /v1 端点以及任何… |
+| 28 | *[sveltejs/svelte](https://github.com/sveltejs/svelte) | **+543** | 89.7k | JavaScript | 适合我们其他人的网络开发 |
+| 29 | *[CzzzzzzJ/mdldm-maitian](https://github.com/CzzzzzzJ/mdldm-maitian) | **+542** | 1.2k | JavaScript | 麦田：自媒体多平台发布中控与数据监控（B站/抖音/小红书/视频号/YouTube/X），飞书卡片通知 + 数据大屏 |
+| 30 | [yetone/magpie](https://github.com/yetone/magpie) | **+541** | 38.4k | Go | 每个代理的模型。一处。来自菜单栏的 DeepSeek 上的 Codex、Kimi 上的 Claude Code。 |
 
-完整报告（含增速榜与数据说明）：[`reports/2026-11-17.md`](reports/2026-11-17.md)
+完整报告（含增速榜与数据说明）：[`reports/2026-11-18.md`](reports/2026-11-18.md)
 
 ---
 
