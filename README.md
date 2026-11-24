@@ -4,42 +4,42 @@
 与上一次快照对比算出日增 star，输出 Top 30 榜单并自动提交回本仓库。
 榜单里的仓库简介统一翻译成中文，不用再对着英文猜。
 
-## 最新一期 · 2026-11-23
+## 最新一期 · 2026-11-24
 
 | # | 仓库 | 今日 | 总星 | 语言 | 简介 |
 |---:|------|-----:|-----:|------|------|
-| 1 | *[ItsNotRexed/Leonida](https://github.com/ItsNotRexed/Leonida) | **+9,645** | 17.2k | Python | Leonida 是 Xbox 版侠盗猎车手 6 的原生 PC 重新编译版 |
-| 2 | [pingdotgg/t3code](https://github.com/pingdotgg/t3code) | **+2,736** | 72.7k | TypeScript | 从任何计算机或手机控制 Claude Code、Codex 等的最佳方式 |
-| 3 | *[EL4CTEO/fast-anything](https://github.com/EL4CTEO/fast-anything) | **+2,011** | 2.3k | Rust | 不要用 Rust 重写它。重写缓慢的 5%：分析 Python、Node 或 Ruby 应用程序，使用编码代理移植热门功能，证… |
-| 4 | [elementalsouls/Claude-BugHunter](https://github.com/elementalsouls/Claude-BugHunter) | **+1,996** | 18.4k | Python | 用于错误搜寻和外部红队工作的 Claude Code 技能包 - 82 项技能、15 个斜线命令、涵盖 24 个核心漏洞类别的… |
-| 5 | [morluto/rea](https://github.com/morluto/rea) | **+1,481** | 474.6k | TypeScript | 使用代理对任何内容进行逆向工程，从应用程序行为到本机二进制文件。 |
-| 6 | [stablyai/orca](https://github.com/stablyai/orca) | **+1,279** | 133.5k | TypeScript | Orca 允许您使用自己的订阅运行一组机器人（例如 Claude Code、Grok、Agy、Codex）。可在桌面、移动和远… |
-| 7 | [BaaRai/ARTEX](https://github.com/BaaRai/ARTEX) | **+1,215** | 16.6k | Go | ARTEX - AI自主渗透测试系统（英文翻译；上游：Autumn-27/ARTEX、AGPL-3.0） |
-| 8 | [Ebony-Vinyl/dsh-our-free-model](https://github.com/Ebony-Vinyl/dsh-our-free-model) | **+1,039** | 84.4k | JavaScript | 在 dsh 里装上这个插件即可，无需登录、注册或填 API Key，就能使用包括 DeepSeek V4.1 Flash、Ki… |
-| 9 | *[XiaoYouChR/Ghost-Downloader-3](https://github.com/XiaoYouChR/Ghost-Downloader-3) | **+985** | 15.6k | Python | The only downloader you need. 下载器的集大成者。 |
-| 10 | [storytold/craft-anything](https://github.com/storytold/craft-anything) | **+977** | 41.5k | Rust | 制作任何东西：了解任何软件的工作原理，并制作自己的软件。 |
-| 11 | *[anefzaoui/misterdownloadmanager](https://github.com/anefzaoui/misterdownloadmanager) | **+925** | 16.9k | Rust | isterdownloadmanager：终极开源、无尘室下载管理器，使用纯 Rust 从头编写，适用于 Windows、Ma… |
-| 12 | [firecrawl/firecrawl](https://github.com/firecrawl/firecrawl) | **+891** | 207.3k | TypeScript | 知识基础设施让您的座席变得更加聪明。通过一个 API 搜索、抓取和访问 550 多个数据提供商。 |
-| 13 | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | **+814** | 73.0k | Python | AI 代理技能可研究 Reddit、X、YouTube、HN、Polymarket 和网络上的任何主题，然后综合得出有根据的摘要 |
-| 14 | [boykopovar/AnyPS5](https://github.com/boykopovar/AnyPS5) | **+762** | 60.5k | C++ | 自动将 PS5 可执行文件移植到 Linux 和 Windows 的工具 |
-| 15 | [jingyaogong/minimind](https://github.com/jingyaogong/minimind) | **+741** | 69.0k | Python | 🧠 两小时从 0 训出你的 64M 大模型。Train your own 64M LLM from scratch in 2… |
-| 16 | *[ChiefGyk3D/Clouds-Against-Humanity](https://github.com/ChiefGyk3D/Clouds-Against-Humanity) | **~+722** | 3.0k | Python | 通过构建来学习云安全！一个开源家庭实验室，从头开始教授零信任、DevSecOps、IaC 和云架构。 |
-| 17 | *[nexu-io/openmotion](https://github.com/nexu-io/openmotion) | **+656** | 15.5k | TypeScript | 开源 Claude Motion 和 CapCut 替代方案。使用您的品牌套件将参考视频转换为可编辑的动态图形。导出适用于 Y… |
-| 18 | [erkamyaman/rust-anything](https://github.com/erkamyaman/rust-anything) | **+635** | 8.2k | Rust | 用 Rust 重写整个应用程序，一次一小部分，并在每一步检查原始记录的行为。 CLI、HTTP 服务器以及 TypeScrip… |
-| 19 | [debpalash/VoiceStudio](https://github.com/debpalash/VoiceStudio) | **+629** | 116.7k | Python | VoiceStudio 是 ElevenLabs 的开源、完全本地化替代方案 — 提供 646 种语言的语音克隆、语音设计、视… |
-| 20 | [ccch1mneyyy/dsh-Go](https://github.com/ccch1mneyyy/dsh-Go) | **+626** | 30.4k | Dart | dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。 |
-| 21 | *[affaan-m/ECC](https://github.com/affaan-m/ECC) | **~+598** | 309.2k | JavaScript | 代理利用性能优化系统。 Claude Code、Codex、Opencode、Cursor 等的技能、直觉、记忆、安全性和研究… |
-| 22 | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | **+593** | 70.5k | HTML | Claude Code、Codex、GitHub Copilot、Cursor、Factory Droid、Qoder 和 P… |
-| 23 | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | **+578** | 115.2k | Rust | 编码代理的设计词汇。更加优雅和大胆地进行引导，通过批评和审计进行审查，在人工智能发布之前抓住它。 |
-| 24 | [toeverything/AFFiNE](https://github.com/toeverything/AFFiNE) | **+575** | 77.0k | TypeScript | 不仅仅是 Notion 和 Miro。 AFFiNE（发音为 [ə‘fain]）是一个集规划、分类和创建于一体的下一代知识库。… |
-| 25 | *[DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | **+572** | 197.1k | JavaScript | 让你的人工智能代理像房间里最懒的高级开发人员一样思考。最好的代码是你从未编写过的代码。 |
-| 26 | *[Niko1221/Strata](https://github.com/Niko1221/Strata) | **+564** | 47.2k | C++ | Qwen3.8-Flash-Next 适用于任何消费类硬件：适用于 Windows / Linux 的一键安装。 Strata… |
-| 27 | *[thtbee/nectarlink](https://github.com/thtbee/nectarlink) | **+559** | 5.7k | Rust | 您的 Android 手机和 PC 合二为一。 Windows 和 Linux。本地优先、端到端加密、无账户。 |
-| 28 | *[heygen-com/hyperframes](https://github.com/heygen-com/hyperframes) | **+547** | 88.5k | TypeScript | 开源 AI 视频编辑器：编辑您自己的素材，或者使用 Claude Code、Codex 或免费的 Studio 应用程序创建和… |
-| 29 | [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | **+544** | 285.7k | TypeScript | DeepSeek Harness：一切都是插件。 |
-| 30 | [tashfeenahmed/freellmapi](https://github.com/tashfeenahmed/freellmapi) | **+544** | 56.9k | TypeScript | 每月 101 亿个代币。 87 个免费的法学硕士提供商。 1,313 个免费模型端点。所有这些都位于一个 /v1 端点以及任何… |
+| 1 | *[ivall/xcl](https://github.com/ivall/xcl) | **+5,350** | 5.7k | Rust | 适用于 Windows 的 Xbox 系列兼容层 - 本地运行控制台游戏代码，重新实现控制台系统库并将 RDNA2 着色器重新… |
+| 2 | [pingdotgg/t3code](https://github.com/pingdotgg/t3code) | **+3,413** | 76.1k | TypeScript | 从任何计算机或手机控制 Claude Code、Codex 等的最佳方式 |
+| 3 | *[AFK-surf/xnulinux](https://github.com/AFK-surf/xnulinux) | **+2,339** | 2.7k | Objective-C++ | XNU 作为 Linux 内的可加载内核模块（arm64 Linux 的 macOS 个性） |
+| 4 | [BaaRai/ARTEX](https://github.com/BaaRai/ARTEX) | **+1,708** | 18.3k | Go | ARTEX - AI自主渗透测试系统（英文翻译；上游：Autumn-27/ARTEX、AGPL-3.0） |
+| 5 | [morluto/rea](https://github.com/morluto/rea) | **+1,678** | 476.2k | TypeScript | 使用代理对任何内容进行逆向工程，从应用程序行为到本机二进制文件。 |
+| 6 | [stablyai/orca](https://github.com/stablyai/orca) | **+1,598** | 135.1k | TypeScript | Orca 允许您使用自己的订阅运行一组机器人（例如 Claude Code、Grok、Agy、Codex）。可在桌面、移动和远… |
+| 7 | [XiaoYouChR/Ghost-Downloader-3](https://github.com/XiaoYouChR/Ghost-Downloader-3) | **+1,234** | 16.8k | Python | The only downloader you need. 下载器的集大成者。 |
+| 8 | [Ebony-Vinyl/dsh-our-free-model](https://github.com/Ebony-Vinyl/dsh-our-free-model) | **+1,171** | 85.5k | JavaScript | 在 dsh 里装上这个插件即可，无需登录、注册或填 API Key，就能使用包括 DeepSeek V4.1 Flash、Ki… |
+| 9 | *[EL4CTEO/fast-anything](https://github.com/EL4CTEO/fast-anything) | **+1,058** | 3.4k | Rust | 不要用 Rust 重写它。重写缓慢的 5%：分析 Python、Node 或 Ruby 应用程序，使用编码代理移植热门功能，证… |
+| 10 | [firecrawl/firecrawl](https://github.com/firecrawl/firecrawl) | **+1,027** | 208.3k | TypeScript | 知识基础设施让您的座席变得更加聪明。通过一个 API 搜索、抓取和访问 550 多个数据提供商。 |
+| 11 | *[os6/nospeaker](https://github.com/os6/nospeaker) | **+947** | 1.6k | Swift | 使用触觉电机让 MacBook 的触控板说话 |
+| 12 | [storytold/craft-anything](https://github.com/storytold/craft-anything) | **+914** | 42.4k | Rust | 制作任何东西：了解任何软件的工作原理，并制作自己的软件。 |
+| 13 | *[LadybirdBrowser/ladybird](https://github.com/LadybirdBrowser/ladybird) | **+899** | 68.2k | Rust | 真正独立的网络浏览器 |
+| 14 | *[mjmirza/app-store-compliance](https://github.com/mjmirza/app-store-compliance) | **~+888** | 5.3k | Shell | 避免常见的 App Store 和 Google Play 拒绝。开放剧本和提交前保护，包含 124 个记录的拒绝模式和修复、… |
+| 15 | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | **+835** | 71.3k | HTML | Claude Code、Codex、GitHub Copilot、Cursor、Factory Droid、Qoder 和 P… |
+| 16 | [jingyaogong/minimind](https://github.com/jingyaogong/minimind) | **+833** | 69.8k | Python | 🧠 两小时从 0 训出你的 64M 大模型。Train your own 64M LLM from scratch in 2… |
+| 17 | [erkamyaman/rust-anything](https://github.com/erkamyaman/rust-anything) | **+760** | 9.0k | Rust | 用 Rust 重写整个应用程序，一次一小部分，并在每一步检查原始记录的行为。 CLI、HTTP 服务器以及 TypeScrip… |
+| 18 | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | **+754** | 73.7k | Python | AI 代理技能可研究 Reddit、X、YouTube、HN、Polymarket 和网络上的任何主题，然后综合得出有根据的摘要 |
+| 19 | [debpalash/VoiceStudio](https://github.com/debpalash/VoiceStudio) | **+750** | 117.5k | Python | VoiceStudio 是 ElevenLabs 的开源、完全本地化替代方案 — 提供 646 种语言的语音克隆、语音设计、视… |
+| 20 | [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes) | **+730** | 89.2k | TypeScript | 开源 AI 视频编辑器：编辑您自己的素材，或者使用 Claude Code、Codex 或免费的 Studio 应用程序创建和… |
+| 21 | *[pierridotite/mobile-agent-testers](https://github.com/pierridotite/mobile-agent-testers) | **+730** | 1.6k | Python | 20 位 AI 测试人员在 20 部不同的手机上并行地在 GitHub 的免费运行程序上进行测试：iOS 模拟器和 Andro… |
+| 22 | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | **+675** | 115.9k | Rust | 编码代理的设计词汇。更加优雅和大胆地进行引导，通过批评和审计进行审查，在人工智能发布之前抓住它。 |
+| 23 | *[shinyobjectz/raea](https://github.com/shinyobjectz/raea) | **~+675** | 4.8k | TypeScript | 渲染任何引擎：告诉你的人工智能要做什么。视频、动态图形、3D 和游戏（如 React 和 TypeScript）在您自己的 G… |
+| 24 | [tashfeenahmed/freellmapi](https://github.com/tashfeenahmed/freellmapi) | **+659** | 57.5k | TypeScript | 每月 101 亿个代币。 87 个免费的法学硕士提供商。 1,313 个免费模型端点。所有这些都位于一个 /v1 端点以及任何… |
+| 25 | [anefzaoui/misterdownloadmanager](https://github.com/anefzaoui/misterdownloadmanager) | **+651** | 17.5k | Rust | isterdownloadmanager：终极开源、无尘室下载管理器，使用纯 Rust 从头编写，适用于 Windows、Ma… |
+| 26 | [affaan-m/ECC](https://github.com/affaan-m/ECC) | **+641** | 309.8k | JavaScript | 代理利用性能优化系统。 Claude Code、Codex、Opencode、Cursor 等的技能、直觉、记忆、安全性和研究… |
+| 27 | [toeverything/AFFiNE](https://github.com/toeverything/AFFiNE) | **+626** | 77.6k | TypeScript | 不仅仅是 Notion 和 Miro。 AFFiNE（发音为 [ə‘fain]）是一个集规划、分类和创建于一体的下一代知识库。… |
+| 28 | *[sherlock-project/sherlock](https://github.com/sherlock-project/sherlock) | **+619** | 116.6k | Python | 通过社交网络上的用户名查找社交媒体帐户 |
+| 29 | [boykopovar/AnyPS5](https://github.com/boykopovar/AnyPS5) | **+605** | 61.1k | C++ | 自动将 PS5 可执行文件移植到 Linux 和 Windows 的工具 |
+| 30 | *[yetone/magpie](https://github.com/yetone/magpie) | **+600** | 40.8k | Go | 每个代理的模型。一处。来自菜单栏的 DeepSeek 上的 Codex、Kimi 上的 Claude Code。 |
 
-完整报告（含增速榜与数据说明）：[`reports/2026-11-23.md`](reports/2026-11-23.md)
+完整报告（含增速榜与数据说明）：[`reports/2026-11-24.md`](reports/2026-11-24.md)
 
 ---
 
